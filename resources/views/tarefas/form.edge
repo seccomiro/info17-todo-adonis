@@ -1,0 +1,14 @@
+<form action="{{ tarefa.id ? route('tarefas.update', { id: tarefa.id }) + '?_method=PUT' : route('tarefas.store') }}" method="POST">
+  {{ csrfField() }}
+
+  <div class="form-group">
+    <label for="tarefa_titulo">Título</label>
+    <input type="text" class="form-control" id="tarefa_titulo" name="titulo" value="{{ tarefa.titulo || '' }}">
+  </div>
+  <div class="form-group">
+    <label for="tarefa_descricao">Descrição</label>
+    <textarea class="form-control" id="tarefa_descricao" name="descricao" rows="3">{{ tarefa.descricao || '' }}</textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Salvar</button>
+  <a href="{{ route('tarefas.index') }}" class="btn btn-link">Cancelar</a>
+</form>

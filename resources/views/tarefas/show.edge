@@ -1,0 +1,20 @@
+@layout('layout.master')
+
+@section('conteudo')
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ tarefa.titulo }}</h5>
+          <p class="card-text">{{ tarefa.descricao }}</p>
+          <a href="{{ route('tarefas.edit', { id: tarefa.id }) }}" class="btn btn-primary">Editar</a>
+          <form class="d-inline" action="{{ route('tarefas.destroy', { id: tarefa.id }) + '?_method=DELETE' }}" method="POST">
+            {{ csrfField() }}
+            <button type="submit" class="btn btn-danger">Remover</button>
+          </form>
+          <a href="{{ route('tarefas.index') }}" class="btn btn-link">Voltar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+@endsection

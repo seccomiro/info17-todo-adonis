@@ -1,0 +1,28 @@
+@layout('layout.master')
+
+@section('conteudo')
+  <div class="text-center">
+    <h2>Minhas Tarefas</h2>
+    <a href="{{ route('tarefas.create') }}" class="btn btn-primary btn-lg mb-4">Nova Tarefa</a>
+    <div class="row justify-content-center">
+      <div class="col-lg-6 card text-left">
+        <ul class="list-group list-group-flush">
+          @each(tarefa in tarefas)
+            <li class="list-group-item" style="font-size: 150%">
+
+              <a class="text-dark" href="{{ route('tarefas.concluida', { id: tarefa.id }) }}"><i class="far fa{{ tarefa.concluida ? '-check' : '' }}-square"></i></a>
+
+              <a class="text-{{ tarefa.concluida ? 'danger' : 'dark' }}" href="{{ route('tarefas.show', { id: tarefa.id }) }}">
+              @if(tarefa.concluida)
+                <del>{{ tarefa.titulo }}</del>
+              @else
+                {{ tarefa.titulo }}
+              @endif
+              </a>
+            </li>
+          @endeach
+        </ul>
+      </div>
+    </div>
+  </div>
+@endsection
