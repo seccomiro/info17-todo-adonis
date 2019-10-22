@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const Config = use("Config");
+const Config = use('Config');
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -15,21 +15,22 @@ const Config = use("Config");
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const Route = use("Route");
-const loginRoute = Config.get("adonis-auth-scaffold.loginRoute");
-const registerRoute = Config.get("adonis-auth-scaffold.registrationRoute");
-const registrationSuccessRoute = Config.get("adonis-auth-scaffold.registrationSuccessRedirectTo");
-const passwordResetRoute = Config.get(
-  "adonis-auth-scaffold.passwordResetRoute"
+const Route = use('Route');
+const loginRoute = Config.get('adonis-auth-scaffold.loginRoute');
+const registerRoute = Config.get('adonis-auth-scaffold.registrationRoute');
+const registrationSuccessRoute = Config.get(
+  'adonis-auth-scaffold.registrationSuccessRedirectTo'
 );
-const logoutRoute = Config.get("adonis-auth-scaffold.logoutRoute");
+const passwordResetRoute = Config.get(
+  'adonis-auth-scaffold.passwordResetRoute'
+);
+const logoutRoute = Config.get('adonis-auth-scaffold.logoutRoute');
 
-Route.post(loginRoute, "AuthController.login").middleware('guest');
-Route.post(registerRoute, "AuthController.register");
-Route.post(passwordResetRoute, "AuthController.forgotPassword");
+Route.post(loginRoute, 'AuthController.login').middleware('guest');
+Route.post(registerRoute, 'AuthController.register');
+Route.post(passwordResetRoute, 'AuthController.forgotPassword');
 
-Route.get(registerRoute, "AuthController.getRegister");
-Route.get(loginRoute, "AuthController.getLogin");
-Route.get(passwordResetRoute, "AuthController.getResetPassword");
-Route.get(logoutRoute, "AuthController.getLogout");
-Route.get(registrationSuccessRoute, "AuthController.getAuthDashboard");
+Route.get(registerRoute, 'AuthController.getRegister');
+Route.get(loginRoute, 'AuthController.getLogin');
+Route.get(passwordResetRoute, 'AuthController.getResetPassword');
+Route.get(logoutRoute, 'AuthController.getLogout');

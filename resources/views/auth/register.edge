@@ -1,8 +1,8 @@
-@layout('layouts.auth')
-@section('view-title')
+@layout('layout.master')
+@section('titulo')
 Register
 @endsection
-@section('content')
+@section('conteudo')
   <form action="{{ Config.get('adonis-auth-scaffold.registrationRoute') }}" method="post" class="auth-form">
     <input name="_csrf" type="hidden" value="{{ csrfToken }}" />
     <h2>Create an account</h2>

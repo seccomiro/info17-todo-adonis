@@ -6,20 +6,72 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" integrity="sha256-zmfNZmXoNWBMemUOo1XUGFfc0ihGGLYdgtJS3KCr/l0=" crossorigin="anonymous">
-    <link rel="stylesheet" href="/temp.css">
 
-    <title>IFList</title>
+    {{ style('auth/auth-styles') }}
+
+    <title>
+      @section('titulo')
+        IFList
+      @endsection
+      | IFList
+    </title>
   </head>
   <body>
-    <div class="jumbotron">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div class="container">
-        <h1>IFList</h1>
-        <p>Suas tarefas em dia</p>
+        <a class="navbar-brand" href="/">IFList</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          @loggedIn
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="/tarefas">Tarefas</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{ auth.user.username }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="{{ Config.get('adonis-auth-scaffold.logoutRoute') }}">Logout</a>
+                </div>
+              </li>
+            </ul>
+            <form
+              class="form-inline my-2 my-lg-0" action="{{ route('tarefas.index') }}" method="get">
+              <input
+                name="busca"
+                value="{{ request.input('busca') || '' }}"
+                class="form-control mr-sm-2" type="search"
+                placeholder="Buscar Tarefa" aria-label="Buscar">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                Buscar
+              </button>
+            </form>
+          @else
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link text-primary" href="{{ Config.get('adonis-auth-scaffold.loginRoute') }}">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-primary" href="{{ Config.get('adonis-auth-scaffold.registrationRoute') }}">Registrar</a>
+              </li>
+            </ul>
+          @endloggedIn
+        </div>
       </div>
-    </div>
+    </nav>
+
     <div class="container">
       @!section('conteudo')
     </div>
+
+    <footer class="blog-footer">
+      <p>This template is an example an is not optimized for production. We assume that you already have Bootstrap configured for your application.</p>
+      <p>You can find the master file at /resources/views/layouts/auth.edge.</p>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

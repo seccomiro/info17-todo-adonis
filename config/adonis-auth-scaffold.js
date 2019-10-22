@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const Env = use('Env');
 
@@ -21,7 +21,7 @@ module.exports = {
   | Specifies the route to handle registration GET and POST requests.
   |
   */
-  registrationRoute: "/register",
+  registrationRoute: '/register',
 
   /*
   |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ module.exports = {
   | Leave empty if you do not want any redirects.
   |
   */
-  registrationSuccessRedirectTo: "/auth/dashboard",
+  registrationSuccessRedirectTo: '/',
 
   /*
   |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ module.exports = {
   | Specifies the route to handle login GET and POST requests.
   |
   */
-  loginRoute: "/login",
+  loginRoute: '/login',
 
   /*
   |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ module.exports = {
   | Specifies the route to handle password reset GET and POST requests.
   |
   */
-  passwordResetRoute: "/password/reset",
+  passwordResetRoute: '/password/reset',
 
   /*
   |--------------------------------------------------------------------------
@@ -62,7 +62,7 @@ module.exports = {
   | Specifies the route to handle logout GET and POST requests.
   |
   */
-  logoutRoute: "/logout",
+  logoutRoute: '/logout',
 
   /*
   |--------------------------------------------------------------------------
@@ -72,7 +72,7 @@ module.exports = {
   | Specifies the URL for the app.
   |
   */
-  appURL: "http://localhost:3333",
+  appURL: 'http://localhost:3333',
 
   /*
   |--------------------------------------------------------------------------
@@ -84,10 +84,10 @@ module.exports = {
   */
   validationRules: {
     registration: {
-      email: "required|email",
-      username: "required",
-      password: "required",
-      password_confirmation: "required|same:password"
+      email: 'required|email',
+      username: 'required',
+      password: 'required',
+      password_confirmation: 'required|same:password'
     }
   },
 
@@ -101,13 +101,13 @@ module.exports = {
   */
   validationMessages: action => {
     return {
-      "uid.required": "Username or E-mail must be filled.",
-      "username.required": "Username must be filled.",
-      "email.required": "E-mail must be filled.",
-      "email.email": "Please use a valid e-mail address.",
-      "password.required": "Password must be filled.",
-      "password.mis_match": "Invalid password.",
-      "password_confirmation.same": `Password confirmation must be same as password.`
+      'uid.required': 'Username or E-mail must be filled.',
+      'username.required': 'Username must be filled.',
+      'email.required': 'E-mail must be filled.',
+      'email.email': 'Please use a valid e-mail address.',
+      'password.required': 'Password must be filled.',
+      'password.mis_match': 'Invalid password.',
+      'password_confirmation.same': `Password confirmation must be same as password.`
     };
   }
 };
