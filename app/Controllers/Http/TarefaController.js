@@ -19,12 +19,14 @@ class TarefaController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view }) {
-    const tarefas = (await Tarefa.query()
+  async index({ request, view, auth }) {
+    const busca = request.input('busca') || '';
+    const tarefas = (await auth.user
+      .tarefas()
+      .where('titulo', 'like', `%${busca}%`)
       .orderBy('concluida')
       .orderBy('updated_at', 'desc')
       .fetch()).rows;
-    // select * from tarefas order by concluida, updated_at desc
     return view.render('tarefas.index', { tarefas });
   }
 
@@ -50,8 +52,9 @@ class TarefaController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response }) {
+  async store({ request, response, auth }) {
     const tarefaData = request.only(['titulo', 'descricao']);
+    tarefaData.user_id = auth.user.id;
     const tarefa = await Tarefa.create(tarefaData);
     response.route('tarefas.show', { id: tarefa.id });
   }
@@ -65,8 +68,7 @@ class TarefaController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {
-    const tarefa = await Tarefa.find(params.id);
+  async show({ view, tarefa }) {
     return view.render('tarefas.show', { tarefa });
   }
 
@@ -79,8 +81,7 @@ class TarefaController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async edit({ params, request, response, view }) {
-    const tarefa = await Tarefa.find(params.id);
+  async edit({ view, tarefa }) {
     return view.render('tarefas.edit', { tarefa });
   }
 
@@ -92,11 +93,10 @@ class TarefaController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {
-    let tarefa = await Tarefa.find(params.id);
+  async update({ params, request, response, tarefa }) {
     const tarefaData = request.only(['titulo', 'descricao']);
     tarefa.merge(tarefaData);
-    const success = await tarefa.save();
+    await tarefa.save();
     response.route('tarefas.show', { id: params.id });
   }
 
@@ -108,14 +108,12 @@ class TarefaController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {
-    let tarefa = await Tarefa.find(params.id);
-    const success = await tarefa.delete();
+  async destroy({ response, tarefa }) {
+    await tarefa.delete();
     response.route('tarefas.index');
   }
 
-  async concluida({ params, request, response }) {
-    let tarefa = await Tarefa.find(params.id);
+  async concluida({ response, tarefa }) {
     tarefa.concluida = !tarefa.concluida;
     await tarefa.save();
     response.route('tarefas.index');

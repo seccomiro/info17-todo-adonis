@@ -1,5 +1,7 @@
 'use strict';
 
+require('./authRoutes.js');
+
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -16,9 +18,13 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route');
 
-Route.on('/').render('welcome');
+Route.any('/', ({ response }) => response.redirect('/tarefas'));
 
-Route.resource('tarefas', 'TarefaController');
-Route.get('/tarefas/:id/concluida', 'TarefaController.concluida').as(
-  'tarefas.concluida'
-);
+Route.resource('tarefas', 'TarefaController')
+  .middleware('auth')
+  .middleware(
+    new Map([[['show', 'edit', 'update', 'destroy'], ['protegeTarefa']]])
+  );
+Route.get('/tarefas/:id/concluida', 'TarefaController.concluida')
+  .as('tarefas.concluida')
+  .middleware(['auth', 'protegeTarefa']);

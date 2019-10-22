@@ -1,31 +1,30 @@
-# Adonis fullstack application
+# IFList - AdonisJs
 
-This is the fullstack boilerplate for AdonisJs, it comes pre-configured with.
+Aplicação de Lista de Tarefas feita com [AdonisJs](https://adonisjs.com).
 
-1. Bodyparser
-2. Session
-3. Authentication
-4. Web security middleware
-5. CORS
-6. Edge template engine
-7. Lucid ORM
-8. Migrations and seeds
+Desenvolvida durante as aulas de Desenvolvimento Web (INFO-17).
 
-## Setup
+## Recursos
 
-Use the adonis command to install the blueprint
+- CRUD completo de Tarefas
+- Tarefas concluída / não concluída
+- Autenticação ([Persona](https://github.com/adonisjs/adonis-persona) e [adonis-auth-scaffold](https://github.com/creatrixity/adonis-auth-scaffold))
+- Separação de tarefas por usuário
+- Template e views utilizando Bootstrap
+- Busca
+- Middlewares customizados
+
+## Configuração
 
 ```bash
-adonis new yardstick
-```
+npm i -g @adonisjs/cli # Instalar CLI do AdonisJs
 
-or manually clone the repo and then run `npm install`.
+git clone https://github.com/seccomiro/info17-todo-adonis
+cd info17-todo-adonis
+npm install
+cp .env.example .env
+adonis key:generate
+adonis run:migrations
 
-
-### Migrations
-
-Run the following command to run startup migrations.
-
-```js
-adonis migration:run
+adonis serve --dev
 ```
