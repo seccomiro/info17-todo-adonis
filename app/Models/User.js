@@ -34,7 +34,7 @@ class User extends Model {
   tokens() {
     return this.hasMany('App/Models/Token');
   }
-  // ... Resto da classe
+
   tarefas() {
     return this.hasMany('App/Models/Tarefa');
   }
