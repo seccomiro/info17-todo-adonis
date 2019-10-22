@@ -1,6 +1,7 @@
 'use strict';
 
 const Tarefa = use('App/Models/Tarefa');
+const Observacao = use('App/Models/Observacao');
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -23,6 +24,7 @@ class TarefaController {
     const busca = request.input('busca') || '';
     const tarefas = (await auth.user
       .tarefas()
+      .withCount('observacoes')
       .where('titulo', 'like', `%${busca}%`)
       .orderBy('concluida')
       .orderBy('updated_at', 'desc')
@@ -68,8 +70,10 @@ class TarefaController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view, tarefa }) {
-    return view.render('tarefas.show', { tarefa });
+  async show({ view, tarefa }) {
+    await tarefa.load('observacoes');
+    const observacoes = tarefa.getRelated('observacoes').rows;
+    return view.render('tarefas.show', { tarefa, observacoes });
   }
 
   /**
@@ -117,6 +121,13 @@ class TarefaController {
     tarefa.concluida = !tarefa.concluida;
     await tarefa.save();
     response.route('tarefas.index');
+  }
+
+  async observacao({ request, response, tarefa }) {
+    const obervacaoData = request.only(['mensagem']);
+    obervacaoData.tarefa_id = tarefa.id;
+    await Observacao.create(obervacaoData);
+    response.route('tarefas.show', { id: tarefa.id });
   }
 }
 

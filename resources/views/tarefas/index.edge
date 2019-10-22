@@ -8,17 +8,20 @@
       <div class="col-lg-6 card text-left">
         <ul class="list-group list-group-flush">
           @each(tarefa in tarefas)
-            <li class="list-group-item" style="font-size: 150%">
-
-              <a class="text-dark" href="{{ route('tarefas.concluida', { id: tarefa.id }) }}"><i class="far fa{{ tarefa.concluida ? '-check' : '' }}-square"></i></a>
-
-              <a class="text-{{ tarefa.concluida ? 'danger' : 'dark' }}" href="{{ route('tarefas.show', { id: tarefa.id }) }}">
-              @if(tarefa.concluida)
-                <del>{{ tarefa.titulo }}</del>
-              @else
-                {{ tarefa.titulo }}
+            <li class="list-group-item d-flex justify-content-between align-items-center" style="font-size: 150%">
+              <div>
+                <a class="text-dark" href="{{ route('tarefas.concluida', { id: tarefa.id }) }}"><i class="far fa{{ tarefa.concluida ? '-check' : '' }}-square"></i></a>
+                <a class="text-{{ tarefa.concluida ? 'danger' : 'dark' }}" href="{{ route('tarefas.show', { id: tarefa.id }) }}">
+                @if(tarefa.concluida)
+                  <del>{{ tarefa.titulo }}</del>
+                @else
+                  {{ tarefa.titulo }}
+                @endif
+                </a>
+              </div>
+              @if(tarefa.observacoes_count > 0)
+                <span class="badge badge-warning">{{ tarefa.observacoes_count }}</span>
               @endif
-              </a>
             </li>
           @endeach
         </ul>
