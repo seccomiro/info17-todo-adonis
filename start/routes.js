@@ -24,7 +24,12 @@ Route.resource('tarefas', 'TarefaController')
   .middleware('auth')
   .middleware(
     new Map([[['show', 'edit', 'update', 'destroy'], ['protegeTarefa']]])
-  );
+  )
+  .validator(new Map([[['store', 'update'], ['SalvarTarefa']]]));
+
 Route.get('/tarefas/:id/concluida', 'TarefaController.concluida')
   .as('tarefas.concluida')
+  .middleware(['auth', 'protegeTarefa']);
+Route.post('/tarefas/:id/observacao', 'TarefaController.observacao')
+  .as('tarefas.observacao')
   .middleware(['auth', 'protegeTarefa']);

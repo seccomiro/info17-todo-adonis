@@ -6,7 +6,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">{{ tarefa.titulo }}</h5>
-          <p class="card-text">{{ tarefa.descricao }}</p>
+          <p class="card-text">{{ tarefa.descricao || '' }}</p>
           <a href="{{ route('tarefas.edit', { id: tarefa.id }) }}" class="btn btn-primary">Editar</a>
           <form class="d-inline" action="{{ route('tarefas.destroy', { id: tarefa.id }) + '?_method=DELETE' }}" method="POST">
             {{ csrfField() }}
@@ -14,7 +14,28 @@
           </form>
           <a href="{{ route('tarefas.index') }}" class="btn btn-link">Voltar</a>
         </div>
+        <ul class="list-group list-group-flush">
+          @each(observacao in observacoes)
+            <li class="list-group-item">{{ observacao.mensagem }}</li>
+          @endeach
+        </ul>
       </div>
+
+      <div class="card mt-2">
+        <div class="card-body">
+          <h5 class="card-title">Nova Observação</h5>
+          <form action="{{ route('tarefas.observacao', { id: tarefa.id }) }}" method="POST">
+            {{ csrfField() }}
+          
+            <div class="form-group">
+              <label for="observacao_mensagem">Descrição</label>
+              <textarea class="form-control" id="observacao_mensagem" name="mensagem" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Adicionar</button>
+          </form>
+        </div>
+      </div>
+
     </div>
   </div>
 @endsection

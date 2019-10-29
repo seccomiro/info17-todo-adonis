@@ -3,11 +3,17 @@
 
   <div class="form-group">
     <label for="tarefa_titulo">Título</label>
-    <input type="text" class="form-control" id="tarefa_titulo" name="titulo" value="{{ tarefa.titulo || '' }}">
+    <input type="text" class="form-control" id="tarefa_titulo" name="titulo" value="{{ old('titulo', tarefa.titulo || '') }}">
+    @if(hasErrorFor('titulo'))
+      <small class="form-text text-danger">{{ getErrorFor('titulo') }}</small>
+    @endif
   </div>
   <div class="form-group">
     <label for="tarefa_descricao">Descrição</label>
-    <textarea class="form-control" id="tarefa_descricao" name="descricao" rows="3">{{ tarefa.descricao || '' }}</textarea>
+    <textarea class="form-control" id="tarefa_descricao" name="descricao" rows="3">{{ old('descricao', tarefa.descricao || '') }}</textarea>
+    @if(hasErrorFor('descricao'))
+      <small class="form-text text-danger">{{ getErrorFor('descricao') }}</small>
+    @endif
   </div>
   <button type="submit" class="btn btn-primary">Salvar</button>
   <a href="{{ route('tarefas.index') }}" class="btn btn-link">Cancelar</a>
