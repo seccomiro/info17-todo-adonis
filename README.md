@@ -24,7 +24,7 @@ cd info17-todo-adonis
 npm install
 cp .env.example .env
 adonis key:generate
-adonis run:migrations
+adonis migration:run
 
 adonis serve --dev
 ```
